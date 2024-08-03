@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap');
+
+  
+
+html {
+  font-family: 'Rubik', sans-serif;
+  background: rgb(0,34,0);
+  background: linear-gradient(120deg, rgb(246, 251, 237) 0%,rgb(153, 155, 155) 36%, rgb(249, 252, 247) 36%, rgb(96, 245, 4) 100%);
+}
+
+
+body {
+
+    font-family: sans-serif;
+    color: rgb(39, 39, 37);
+    font-weight: 500;
+    font-style: normal;
+    text-align: center;
+    width:90%;
+    max-width: auto;
+    height: auto;
+    margin-top: 3em;    
+    margin-bottom: 1em;
+    margin-right: auto;
+    margin-left: auto;
+    align-items: center; 
+
+}
+img {
+width: 30%;
+height: fit-content;
+}
+a{
+  text-decoration: none;
+  color:#050404;
+}
+a:hover{
+  color:#83b186;
+}
+h1{
+  font-size: 3rem;
+}
+p{
+  font-size: 1rem;
+ color: rgb(10, 10, 9);
+  align-items: left;
+  text-align: left; 
+  margin-left: 2em;  
+}
+   
+header h {
+  display: inline-flexbox;
+  flex-direction: row;
+  align-items: right;
+  text-align: right;  
+  font-size: 1rem;
+  color:rgb(20, 17, 17);
+  padding: 0,3em;
+  
+}
+header a {
+  text-decoration: none; 
+  color: black;
+}
+
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #050404;
+  margin-bottom: 6em;
+}
+
+li {
+  float: left;
+}
+
+li a, .dropbtn {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+
+li.dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+  form > div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.5rem;
+    text-align: center;
+    align-items: center;
+    
+  }
+  input {
+    border: 1px solid #b9abab;
+    border-radius: 0.3rem;
+    padding: 0.45rem;
+    font-size: 1rem;
+  }
+  input[type=submit], .button {
+    
+    padding: 0.5rem 3rem;
+    border-radius: 0.3rem;
+    background-color: #021d0d;
+    color: #fff;
+    font-weight: bold;
+    min-width: 18rem;
+    margin: 1rem auto;
+  }
+
+  .error {
+    color: rgb(116, 23, 23);
+    font-size: 0.8rem;
+  }
+  .info {
+    margin: 25,5,5,20rem;
+    text-align: center;
+   
+  }
+  
+  .info a {
+    font-weight: bolder;
+   
+  }
+  input[type=submit], .button 
+    .flexarea {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 2rem;
+    }
+    .button {
+      text-decoration: none;
+      margin-top: 2em;
+    }
+    .hevoset > div img {
+      width: 20%;
+      height: auto;
+    }
+    .tapahtumat > div img {
+      width: 20%;
+      height: auto;
+    }
+
+
+    
+    .tapahtumat > div {
+   
+      display: grid;
+      grid-template-columns: auto auto auto auto;
+      grid-gap: 10px;
+      background : linear-gradient(to right,#e0e5db 0%, #9bb97b 40%, #99b89d 70%, #89b291 100% );
+      padding: 10px;
+      grid-template-columns: 1fr 1fr 1fr;
+      margin-left: 15em;
+      margin-right: 15em;
+      margin-top: 1em;
+    }
+    .tapahtumat > div > div:nth-child(3) {
+      text-align: center;
+      text-decoration: none;
+      width: auto;
+      height: auto;
+    }
+
+    .tapahtumat > div {
+      display: flex;
+      justify-content: space-between;
+
+      text-align: center;
+    }
+    .tapahtumat > div img {
+      display: flex;
+      justify-content: space-between;
+      width: 30px;
+      height: auto;
+    }
+
+
+  footer {
+    color:#203e16;
+    font-size: 80%;
+    text-align: center;  
+    margin-top: 20em;
+    margin-bottom: 1rem;     
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+  }
+  
+  footer hr {
+    border: none;
+    border-top: 1px dashed hsl(132, 15%, 13%);
+    margin: auto;
+    padding-top: 0,6rem;
+    padding-bottom: 1rem;
+  }
+
+  
+  table {
+      border-collapse: collapse;
+      width: 100%;
+  }
+  
+ 
+  table, th, td {
+      border: 1px solid black;
+  }
+  
+  th, td {
+      padding: 10px;
+      text-align: left;
+  }
+  
