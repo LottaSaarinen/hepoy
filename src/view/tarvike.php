@@ -31,7 +31,7 @@ echo "<div class='flexarea'><a href='tilaa?id=$tarvike[idtarvike]' class='button
 } else {
 echo "<div class='flexarea'>";
 echo"<br><br>";
-echo "<p><div>Olet tehnyt tilauksen. Tuotteet voit hakea varastoltamme Helsingin Ruskeasuolta arkena 10-18 välillä. Voimme myös sopia postituksesta sähköpostitse <a href='yhteystiedot'>TÄÄLTÄ</a>";
+echo "<p><div>Olet tehnyt tilauksen. Tuotteet voit hakea varastoltamme Helsingin Ruskeasuolta arkena 10-18 välillä. Voimme myös sopia postituksesta sähköpostitse <a href='laheta_viesti'>TÄÄLTÄ</a>";
 echo"<br><br><br><br>";
 echo "<a href='perutilaus?id=$tarvike[idtarvike]' class='button'>Peru tilaus</a>";
 echo "</div>";

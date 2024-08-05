@@ -139,6 +139,11 @@ li.dropdown {
     min-width: 18rem;
     margin: 1rem auto;
   }
+ .info [type=viesti]
+  {
+    margin: 5,1,1,5rem;
+    min-width: 30rem;
+  }
 
   .error {
     color: rgb(116, 23, 23);

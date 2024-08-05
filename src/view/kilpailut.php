@@ -2,7 +2,7 @@
 
 <?php
 
-$this->layout('template', ['title' => '']) 
+$this->layout('template', ['title' => '🐎HepOy24 Weekend']) 
 
 ?>
 <div class="kilpailut"></div>

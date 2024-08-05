@@ -1,8 +1,13 @@
-<?php $this->layout('template', ['title' => 'Viesti'])
+<?php $this->layout('template', ['title' => 'Lähetä viesti'])
 
 ?>
+<?php
 
-<h1>Lähetä viesti</h1>
+if (!$loggeduser) {
+  echo " <br><br> 
+<h1>Luo tili tai kirjaudu sisään niin voit lähettää viestin</h1><a href='lisaa_tili'> Voit luoda tilin TÄSTÄ</a>";
+}
+?>
 
 <div class="info">
  <br><hr><hr><br>
@@ -21,9 +26,9 @@
   <input type="email" name="email">
 </div>
   <div>
-  
+ 
   <label for="viesti">Viestisi:</label>
-  <input id="viesti" type="text" name="viesti">
+  <input id="viesti" type="text"  textarea rows=20 cols=40% widht="auto"  name="viesti">
   
 
  

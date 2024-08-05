@@ -1,4 +1,4 @@
-<?php $this->layout('template', ['title' => '']) ?>
+<?php $this->layout('template', ['title' => 'Ei löytynyt :(']) ?>
 
 <h1>Hupsis!</h1>
 

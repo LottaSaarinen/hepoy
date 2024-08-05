@@ -244,41 +244,34 @@ case '/lisaa_tili':
       }
       break;
             
-                  case '/tilaa_vaihtoavain':
-                    $formdata = cleanArrayData($_POST);
-                    if (isset($formdata['laheta'])) {    
-                
-                    
-                      require_once MODEL_DIR . 'henkilo.php';
-                      $user = haeHenkilo($formdata['email']);
-                      if ($user) {
-                        require_once CONTROLLER_DIR . 'tili.php';
-                        $tulos = luoVaihtoavain($formdata['email'],$config['urls']['baseUrl']);
-                        if ($tulos['status'] == "200") {
-                        
-                          echo $templates->render('tilaa_vaihtoavain_lahetetty');
-                          break;
-                        }
-            
-                        echo $templates->render('virhe');
-                        break;
-                      } else {
+case '/tilaa_vaihtoavain':
+      $formdata = cleanArrayData($_POST);
+      if (isset($formdata['laheta'])) {    
+      require_once MODEL_DIR . 'henkilo.php';
+      $user = haeHenkilo($formdata['email']);
+      if ($user) {
+      require_once CONTROLLER_DIR . 'tili.php';
+      $tulos = luoVaihtoavain($formdata['email'],$config['urls']['baseUrl']);
+      if ($tulos['status'] == "200") {
+           echo $templates->render('tilaa_vaihtoavain_lahetetty');
+           break;
+           }
+           echo $templates->render('virhe');
+           break;
+           } else {
+           echo $templates->render('tilaa_vaihtoavain_lahetetty');
+            break;
+             }
+           } else {
+           echo $templates->render('tilaa_vaihtoavain_lomake');
+          }
+          break;
 
-                        echo $templates->render('tilaa_vaihtoavain_lahetetty');
-                        break;
-                      }
-                    } else {
-
-                      echo $templates->render('tilaa_vaihtoavain_lomake');
-                    }
-                    break;
-
-
-                    case '/reset':
-                      $resetkey = $_GET['key'];
-                      require_once MODEL_DIR . 'henkilo.php';
-                      $rivi = tarkistaVaihtoavain($resetkey);
-                      if ($rivi) {
+  case '/reset':
+       $resetkey = $_GET['key'];
+       require_once MODEL_DIR . 'henkilo.php';
+        $rivi = tarkistaVaihtoavain($resetkey);
+        if ($rivi) {
                         
                         if ($rivi['aikaikkuna'] < 0) {
                           echo $templates->render('reset_virhe');
@@ -302,14 +295,13 @@ case '/lisaa_tili':
     
         echo $templates->render('reset_lomake', ['error' => $tulos['error']]);
         break;
-                      } else {
-                       
-                        echo $templates->render('reset_lomake', ['error' => '']);
-                        break;
-                      }
+         } else {
+          echo $templates->render('reset_lomake', ['error' => '']);
+         break;
+         }
                                  
                       
-     case (bool)preg_match('/\/admin.*/', $request):
+ case (bool)preg_match('/\/admin.*/', $request):
           if ($loggeduser["admin"]) {
 
             echo $templates->render('admin');
@@ -329,32 +321,36 @@ case '/lisaa_tili':
             echo $templates->render('admin_ei_oikeuksia');
            }
               break;
-              case '/laheta_viesti': 
-                echo $templates->render('laheta_viesti');
               
-                  break; 
-                case '/viesti':
-               
-                        if (isset($_POST['lahetaviesti'])) {
-                        // $formdata = cleanArrayData($_POST);
-                          require_once CONTROLLER_DIR . 'viesti.php';
-                        
-                          lisaaViesti($loggeduser['idhenkilo'],$_POST['nimi'],$_POST['email'],$_POST['viesti']);
-                     
-                          echo "Kiitos viestistäsi. Se on nyt lähetetty. <br> Yritämme vastata viestiisi mahdollisimman pian";
-                        
-                          break;
-                          
-                        } else {
-                          echo $templates->render('virhe');
-                          break;
-                        }
-                  
-
-
+case '/laheta_viesti': 
+    echo $templates->render('laheta_viesti');
+    break; 
+case '/viesti': 
+    if  (!$loggeduser) {
+    echo "Luo tili tai kirjaudu, niin voit lähettää viestin";
+    }
+    if ($loggeduser) {
+    if (isset($_POST['lahetaviesti'])) {
+    require_once MODEL_DIR . 'viesti.php';
+    require_once CONTROLLER_DIR . 'siivoa.php';
+    $siivoa = siivoaViesti($viesti);
+        if (!$siivoa) {
+          echo $templates->render('viesti_virheellinen');
+          }
+          
+          break;  
+          if ($siivoa) {
+          lisaaViesti($loggeduser['idhenkilo'],$_POST['nimi'],$_POST['email'],$_POST['viesti']);
+          echo $templates->render('viesti_lahetetty');
+          }
+        }
+          break; 
+          } else {
+          echo $templates->render('virhe');
+          }
+          break;    
       
-
-
+    
 case '/yritys': if ($request === '/yritys') {
   echo $templates->render('yritys');
 }
