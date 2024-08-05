@@ -329,84 +329,30 @@ case '/lisaa_tili':
             echo $templates->render('admin_ei_oikeuksia');
            }
               break;
+              case '/laheta_viesti': 
+                echo $templates->render('laheta_viesti');
+              
+                  break; 
+                case '/viesti':
+               
+                        if (isset($_POST['lahetaviesti'])) {
+                        // $formdata = cleanArrayData($_POST);
+                          require_once CONTROLLER_DIR . 'viesti.php';
+                        
+                          lisaaViesti($loggeduser['idhenkilo'],$_POST['nimi'],$_POST['email'],$_POST['viesti']);
+                     
+                          echo "Kiitos viestistäsi. Se on nyt lähetetty. <br> Yritämme vastata viestiisi mahdollisimman pian";
+                        
+                          break;
+                          
+                        } else {
+                          echo $templates->render('virhe');
+                          break;
+                        }
+                  
 
-           /*   case '/laheta_viesti': 
-                if (!isset($_POST['lahetaviesti'])) {
-                  header( "location laheta_viesti");
-                }
-                  break;
-               if (isset($_POST['lahetaviesti'])) {
-              require_once MODEL_DIR . 'viesti.php';
-                  if ($loggeduser) {
-                    lisaaViesti($loggeduser['idhenkilo'],$viesti);
-                          echo "Kiitos viestistäsi. Vastaamme sähköpostitse mahdollisimman pian.";
-                      }
-                    break;
-                      if (!$loggeduser) {
-                        echo "Luo tili <a href='lisaa_tili'>TÄSTÄ</a> niin voit lähettää viestin";
-                      }
-                      break;
-                  }
-      /*  else  { 
-          echo "Pahoittelut! Viestin lähettämisessä ilmeni ongelmia";
-          }
-       break;  
-      /*
-*/
-        case '/viestit':
-          if (isset($_POST['lahetaviesti'])) {
-            require_once MODEL_DIR . 'viesti.php';
-            lisaaViesti($loggeduser['idhenkilo'],$viesti);
-            echo "viesti on luotu tunnisteella $id";
-            break;
-          } else {
-           // echo $templates->render('virhe');
-            break;
-          }
-             /* 
-              case "/viestit":
-                $formdata = cleanArrayData($_POST);
-                // Tarkistetaan, onko lomakkeelta lähetetty tietoa.
-                if (isset($formdata['lahetaviesti'])) {    
-            
-                     require_once MODEL_DIR . 'henkilo.php';
-                  // Tarkistetaan, onko lomakkeelle syötetty käyttäjätili olemassa.
-                  $user = haeHenkilo($formdata['email']);
-                  if ($user) {
-                    // Käyttäjätili on olemassa.
-                    // Luodaan salasanan vaihtolinkki ja lähetetään se sähköpostiin.
-                    $tulos = lisaaViesti($nimi,$email,$viesti);
-                    if ($tulos['status'] == "200") {
-                      // Vaihtolinkki lähetty sähköpostiin, tulostetaan ilmoitus.
-                      echo $templates->render('tilaa_vaihtoavain_lahetetty');
-                      break;
-                    }
-                    // Vaihtolinkin lähetyksessä tapahtui virhe, tulostetaan
-                    // yleinen virheilmoitus.
-                    echo $templates->render('virhe');
-                    break;
-                  } else {
-                    // Tunnusta ei ollut, tulostetaan ympäripyöreä ilmoitus.
-                    echo $templates->render('tilaa_vaihtoavain_lahetetty');
-                    break;
-                  }
-            
-             
-      
-                
-      */
-case '/laheta_viesti': if ($request === '/laheta_viesti') {
-  echo $templates->render('laheta_viesti');
-}
-    break;    
 
       
-    
-    
-case '/lahetetty': if ($request === '/lahetetty') {
-  echo $templates->render('lahetetty');
-}
-    break;
 
 
 case '/yritys': if ($request === '/yritys') {

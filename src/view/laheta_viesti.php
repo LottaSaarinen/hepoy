@@ -1,11 +1,5 @@
-<?php $this->layout('template', ['title' => 'Kirjautuminen'])
- /* <label>Nimi:</label>
-  <input type="nimi" name="email">
-</div>  
-<div>
-  <label>Sähköposti:</label>
-  <input type="email" name="email">
-</div>*/
+<?php $this->layout('template', ['title' => 'Viesti'])
+
 ?>
 
 <h1>Lähetä viesti</h1>
@@ -15,14 +9,23 @@
 </div>
 
 
-<form action="viestit" method="POST">
+<form action='viesti' method="POST">
+
 <div>
-  
-  <div>
-    <label>Viestisi:</label>
-  
-  <textarea rows=5 cols=60 name="viesti"></textarea>
+
+    <label>Nimi:</label>
+    <input id="nimi" name="nimi">
   </div>
+  <div>
+  <label>Sähköposti:</label>
+  <input type="email" name="email">
+</div>
+  <div>
+  
+  <label for="viesti">Viestisi:</label>
+  <input id="viesti" type="text" name="viesti">
+  
+
  
     <input type="submit" name="lahetaviesti" value="Lähetä">
   </div>
