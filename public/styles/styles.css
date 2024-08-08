@@ -3,8 +3,8 @@
   
 
 html {
+  min-height: 100vh;
   font-family: 'Rubik', sans-serif;
-  background: rgb(0,34,0);
   background: linear-gradient(120deg, rgb(246, 251, 237) 0%,rgb(153, 155, 155) 36%, rgb(249, 252, 247) 36%, rgb(96, 245, 4) 100%);
 }
 
@@ -18,12 +18,12 @@ body {
     text-align: center;
     width:90%;
     max-width: auto;
-    height: auto;
     margin-top: 3em;    
     margin-bottom: 1em;
     margin-right: auto;
     margin-left: auto;
     align-items: center; 
+    min-height: 100vh;
 
 }
 img {
@@ -221,7 +221,7 @@ li.dropdown {
     margin-top: 20em;
     margin-bottom: 1rem;     
     padding-bottom: 1rem;
-    padding-top: 1rem;
+    padding-top: 70rem;
   }
   
   footer hr {

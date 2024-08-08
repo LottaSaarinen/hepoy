@@ -6,10 +6,16 @@ require_once HELPERS_DIR . 'DB.php';
           [$nimi,$email,$viesti]);
   return DB::lastInsertId();
 }*/
-function lisaaViesti($idhenkilo,$nimi,$email,$viesti) {
-  DB::run('INSERT INTO viesti (idhenkilo,nimi,email,viesti) VALUES (?,?,?,?)',
-          [$idhenkilo,$nimi,$email,$viesti]);
+function lisaaViesti($nimi,$email,$viesti) {
+  DB::run('INSERT INTO viesti (nimi,email,viesti) VALUES (?,?,?)',
+          [$nimi,$email,$viesti]);
+          return DB::lastInsertId();
 
+}
+function lisaaViesteja($idhenkilo,$viesti) {
+  DB::run('INSERT INTO viesti (idhenkilo, viesti) VALUES (?,?)',
+          [$idhenkilo,$viesti]);
+          return DB::lastInsertId();
 }/*
 
   require_once HELPERS_DIR . 'DB.php';

@@ -2,7 +2,7 @@
 <?php
 
 
-  session_start();
+session_start();
 
 
 require_once '../src/init.php';
@@ -10,9 +10,9 @@ require_once '../src/init.php';
   if (isset($_SESSION['user'])) {
     require_once MODEL_DIR . 'henkilo.php';
     $loggeduser = haeHenkilo($_SESSION['user']);
-  } else {
+    } else {
     $loggeduser = NULL;
-  }
+    }
 
   
   $request = str_replace($config['urls']['baseUrl'],'',$_SERVER['REQUEST_URI']);
@@ -22,28 +22,30 @@ require_once '../src/init.php';
 
  
      switch ($request) {
+
+
 case '/':
 case '/kirjaudu':
-        if (isset($_POST['laheta'])) {
-        require_once CONTROLLER_DIR . 'kirjaudu.php';
-        if (tarkistaKirjautuminen($_POST['email'],$_POST['salasana'])) {
-        require_once MODEL_DIR . 'henkilo.php';
-        $user = haeHenkilo($_POST['email']);
-       if ($user['vahvistettu']) {
-       session_regenerate_id();
-       $_SESSION['user'] = $user['email'];
-       $_SESSION['admin'] = $user['admin'];
-              header("Location:  yritys");
-              } else {
-              echo $templates->render('kirjaudu', [ 'error' => ['virhe' => 'Tili on vahvistamatta! Ole hyvä, ja vahvista tili sähköpostissa olevalla linkillä.']]);
-            }
+          if (isset($_POST['laheta'])) {
+          require_once CONTROLLER_DIR . 'kirjaudu.php';
+          if (tarkistaKirjautuminen($_POST['email'],$_POST['salasana'])) {
+          require_once MODEL_DIR . 'henkilo.php';
+          $user = haeHenkilo($_POST['email']);
+          if ($user['vahvistettu']) {
+          session_regenerate_id();
+          $_SESSION['user'] = $user['email'];
+          $_SESSION['admin'] = $user['admin'];
+          header("Location:  yritys");
           } else {
-              echo $templates->render('kirjaudu', [ 'error' => ['virhe' => 'Väärä käyttäjätunnus tai salasana!']]);
+          echo $templates->render('kirjaudu', [ 'error' => ['virhe' => 'Tili on vahvistamatta! Ole hyvä, ja vahvista tili sähköpostissa olevalla linkillä.']]);
           }
           } else {
-             echo $templates->render('kirjaudu', [ 'error' => []]);
-        }
-        break;
+          echo $templates->render('kirjaudu', [ 'error' => ['virhe' => 'Väärä käyttäjätunnus tai salasana!']]);
+          }
+          } else {
+          echo $templates->render('kirjaudu', [ 'error' => []]);
+          }
+          break;
 
 case '/logout':
           require_once CONTROLLER_DIR . 'kirjaudu.php';
@@ -52,106 +54,107 @@ case '/logout':
           break;
           
 case '/tapahtumat':
-        require_once MODEL_DIR . 'tapahtuma.php';
-        $tapahtumat = haeTapahtumat();
-        echo $templates->render('tapahtumat',['tapahtumat' => $tapahtumat]);
-        break;
+            require_once MODEL_DIR . 'tapahtuma.php';
+            $tapahtumat = haeTapahtumat();
+            echo $templates->render('tapahtumat',['tapahtumat' => $tapahtumat]);
+            break;
 case '/tapahtuma':
-          require_once MODEL_DIR . 'tapahtuma.php';
-          require_once MODEL_DIR . 'ilmoittautuminen.php';
-          $tapahtuma = haeTapahtuma($_GET['id']);
-          if ($tapahtuma) {
-          if ($loggeduser) {
-              $ilmoittautuminen = haeIlmoittautuminen($loggeduser['idhenkilo'],$tapahtuma['idtapahtuma']);
+            require_once MODEL_DIR . 'tapahtuma.php';
+            require_once MODEL_DIR . 'ilmoittautuminen.php';
+            $tapahtuma = haeTapahtuma($_GET['id']);
+            if ($tapahtuma) {
+            if ($loggeduser) {
+            $ilmoittautuminen = haeIlmoittautuminen($loggeduser['idhenkilo'],$tapahtuma['idtapahtuma']);
             } else {
-              $ilmoittautuminen = NULL;
+            $ilmoittautuminen = NULL;
             }
             echo $templates->render('tapahtuma',['tapahtuma' => $tapahtuma,
-                                                 'ilmoittautuminen' => $ilmoittautuminen,
-                                                 'loggeduser' => $loggeduser]);
-          } else {
+           'ilmoittautuminen' => $ilmoittautuminen,
+           'loggeduser' => $loggeduser]);
+            } else {
             echo $templates->render('tapahtumanotfound');
+            }
+            break;
+
+case '/ilmoittaudu':
+          if ($_GET['id']) {
+          require_once MODEL_DIR . 'ilmoittautuminen.php';
+          $idtapahtuma = $_GET['id'];
+          if ($loggeduser) {
+          lisaaIlmoittautuminen($loggeduser['idhenkilo'],$idtapahtuma);
+          }
+          header("Location: tapahtuma?id=$idtapahtuma");
+          } else {
+          header("Location: tapahtumat");
           }
           break;
 
-case '/ilmoittaudu':
-     if ($_GET['id']) {
-     require_once MODEL_DIR . 'ilmoittautuminen.php';
-     $idtapahtuma = $_GET['id'];
-    if ($loggeduser) {
-    lisaaIlmoittautuminen($loggeduser['idhenkilo'],$idtapahtuma);
-  }
-          header("Location: tapahtuma?id=$idtapahtuma");
-           } else {
-          header("Location: tapahtumat");
-        }
-        break;
-
 case '/peru':
-     if ($_GET['id']) {
-     require_once MODEL_DIR . 'ilmoittautuminen.php';
-     $idtapahtuma = $_GET['id'];
-     if ($loggeduser) {
-     poistaIlmoittautuminen($loggeduser['idhenkilo'],$idtapahtuma);
-   }
+         if ($_GET['id']) {
+         require_once MODEL_DIR . 'ilmoittautuminen.php';
+         $idtapahtuma = $_GET['id'];
+         if ($loggeduser) {
+         poistaIlmoittautuminen($loggeduser['idhenkilo'],$idtapahtuma);
+         }
          header("Location: tapahtuma?id=$idtapahtuma");
-           } else {
-           header("Location: tapahtumat");  
+         } else {
+         header("Location: tapahtumat");  
          }
          break;
 
 
 
 case '/tarvikkeet':
-  require_once MODEL_DIR . 'tarvike.php';
-  $tarvikkeet = haeTarvikkeet();
-  echo $templates->render('tarvikkeet',['tarvikkeet' => $tarvikkeet]);
-  break;
+        require_once MODEL_DIR . 'tarvike.php';
+        $tarvikkeet = haeTarvikkeet();
+        echo $templates->render('tarvikkeet',['tarvikkeet' => $tarvikkeet]);
+        break;
 
-  case '/tarvike':
-    require_once MODEL_DIR . 'tarvike.php';
-    require_once MODEL_DIR . 'tilaus.php';
-    $tarvike = haeTarvike($_GET['id']);
-    if ($tarvike) {
-      if ($loggeduser) {
+case '/tarvike':
+        require_once MODEL_DIR . 'tarvike.php';
+        require_once MODEL_DIR . 'tilaus.php';
+        $tarvike = haeTarvike($_GET['id']);
+        if ($tarvike) {
+        if ($loggeduser) {
         $tilaus = haeTilaus($loggeduser['idhenkilo'],$tarvike['idtarvike']);
-      } else {
+        } else {
         $tilaus = NULL;
-      }
-      echo $templates->render('tarvike',['tarvike' => $tarvike,
-                                           'tilaus' => $tilaus,
-                                           'loggeduser' => $loggeduser]);
-    } else {
-      echo $templates->render('tapahtumanotfound');
-    }
-    break;
+        }
+        echo $templates->render('tarvike',['tarvike' => $tarvike,
+        'tilaus' => $tilaus,
+        'loggeduser' => $loggeduser]);
+        } else {
+        echo $templates->render('tapahtumanotfound');
+        }
+        break;
 
 case '/tilaa':
-  if ($_GET['id']) {
-    require_once MODEL_DIR . 'tilaus.php';
-    $idtarvike = $_GET['id'];
-    if ($loggeduser) {
-      lisaaTilaus($loggeduser['idhenkilo'],$idtarvike);
-    }
-    header("Location: tarvike?id=$idtarvike");
-  } else {
-    header("Location: tarvikeet");
-  }
-  break;
+        if ($_GET['id']) {
+        require_once MODEL_DIR . 'tilaus.php';
+        $idtarvike = $_GET['id'];
+        if ($loggeduser) {
+        lisaaTilaus($loggeduser['idhenkilo'],$idtarvike);
+        }
+        header("Location: tarvike?id=$idtarvike");
+        } else {
+        header("Location: tarvikeet");
+        }
+        break;
 
 case '/perutilaus':
-      if ($_GET['id']) {
-      require_once MODEL_DIR . 'tilaus.php';
-      $idtarvike = $_GET['id'];
-      if ($loggeduser) {
-      poistaTilaus($loggeduser['idhenkilo'],$idtarvike);
-  }
+          if ($_GET['id']) {
+          require_once MODEL_DIR . 'tilaus.php';
+          $idtarvike = $_GET['id'];
+          if ($loggeduser) {
+          poistaTilaus($loggeduser['idhenkilo'],$idtarvike);
+          }
           header("Location: tarvike?id=$idtarvike");
           } else {
           header("Location: tarvikkeet");  
           }
-        break;
-        case '/hevoset':
+          break;
+
+case '/hevoset':
           require_once MODEL_DIR . 'hevonen.php';
           $hevoset = haeHevoset();
           echo $templates->render('hevoset',['hevoset' => $hevoset]);
@@ -161,76 +164,62 @@ case '/perutilaus':
             require_once MODEL_DIR . 'kiinnostus.php';
             $hevonen = haeHevonen($_GET['id']);
             if ($hevonen) {
-              if ($loggeduser) {
-                $kiinnostus = haekiinnostus($loggeduser['idhenkilo'],$hevonen['idhevonen']);
-              } else {
-                $kiinnostus = NULL;
-              }
-              echo $templates->render('hevonen',['hevonen' => $hevonen,
-                                                   'kiinnostus' => $kiinnostus,
-                                                   'loggeduser' => $loggeduser]);
+            if ($loggeduser) {
+            $kiinnostus = haekiinnostus($loggeduser['idhenkilo'],$hevonen['idhevonen']);
             } else {
-              echo $templates->render('tapahtumanotfound');
+            $kiinnostus = NULL;
+            }
+            echo $templates->render('hevonen',['hevonen' => $hevonen,
+           'kiinnostus' => $kiinnostus,
+           'loggeduser' => $loggeduser]);
+            } else {
+            echo $templates->render('tapahtumanotfound');
             }
             break;
-
-        
   
-  case '/kerrokiinnostuksesi':
-       if ($_GET['id']) {
-       require_once MODEL_DIR . 'kiinnostus.php';
-       $idhevonen = $_GET['id'];
-       if ($loggeduser) {
-       lisaaKiinnostus($loggeduser['idhenkilo'],$idhevonen);
-    }
-            header("Location: hevonen?id=$idhevonen");
-             } else {
-            header("Location: hevoset");
-             }
-            break;
+case '/kerrokiinnostuksesi':
+         if ($_GET['id']) {
+         require_once MODEL_DIR . 'kiinnostus.php';
+         $idhevonen = $_GET['id'];
+         if ($loggeduser) {
+         lisaaKiinnostus($loggeduser['idhenkilo'],$idhevonen);
+         }
+         header("Location: hevonen?id=$idhevonen");
+         } else {
+         header("Location: hevoset");
+         }
+         break;
   
-  case '/perukiinnostuksesi':
-       if ($_GET['id']) {
-       require_once MODEL_DIR . 'kiinnostus.php';
-       $idhevonen = $_GET['id'];
-       if ($loggeduser) {
-       poistaKiinnostus($loggeduser['idhenkilo'],$idhevonen);
-   }
-           header("Location: hevonen?id=$idhevonen");
-            } else {
-           header("Location: hevoset");  
-            }
-            break;
-
-
-         
-           
-            
-
+case '/perukiinnostuksesi':
+         if ($_GET['id']) {
+         require_once MODEL_DIR . 'kiinnostus.php';
+         $idhevonen = $_GET['id'];
+         if ($loggeduser) {
+         poistaKiinnostus($loggeduser['idhenkilo'],$idhevonen);
+         }
+         header("Location: hevonen?id=$idhevonen");
+         } else {
+         header("Location: hevoset");  
+         }
+        break;
           
-  
-
 case '/lisaa_tili':
-      if (isset($_POST['laheta'])) {
+        if (isset($_POST['laheta'])) {
         $formdata = cleanArrayData($_POST);
         require_once CONTROLLER_DIR . 'tili.php';
         $tulos = lisaaTili($formdata,$config['urls']['baseUrl']);
         if ($tulos['status'] == "200") {
         echo $templates->render('tili_luotu', ['formdata' => $formdata]);
         break;
-                
         }
         echo $templates->render('lisaa_tili', ['formdata' => $formdata, 'error' => $tulos['error']]);
         break;
         } else {
         echo $templates->render('lisaa_tili', ['formdata' => [], 'error' => []]);
-
         break;
         } 
               
-       
-
-  case '/vahvista':
+case '/vahvista':
        if (isset($_GET['key'])) {
        $key = $_GET['key'];
        require_once MODEL_DIR . 'henkilo.php';
@@ -241,29 +230,29 @@ case '/lisaa_tili':
        }
        } else {
        header("Location: " . $config['urls']['baseUrl']);
-      }
-      break;
+       }
+       break;
             
 case '/tilaa_vaihtoavain':
-      $formdata = cleanArrayData($_POST);
-      if (isset($formdata['laheta'])) {    
-      require_once MODEL_DIR . 'henkilo.php';
-      $user = haeHenkilo($formdata['email']);
-      if ($user) {
-      require_once CONTROLLER_DIR . 'tili.php';
-      $tulos = luoVaihtoavain($formdata['email'],$config['urls']['baseUrl']);
-      if ($tulos['status'] == "200") {
-           echo $templates->render('tilaa_vaihtoavain_lahetetty');
-           break;
-           }
-           echo $templates->render('virhe');
-           break;
-           } else {
-           echo $templates->render('tilaa_vaihtoavain_lahetetty');
-            break;
-             }
-           } else {
-           echo $templates->render('tilaa_vaihtoavain_lomake');
+          $formdata = cleanArrayData($_POST);
+          if (isset($formdata['laheta'])) {    
+          require_once MODEL_DIR . 'henkilo.php';
+          $user = haeHenkilo($formdata['email']);
+          if ($user) {
+          require_once CONTROLLER_DIR . 'tili.php';
+          $tulos = luoVaihtoavain($formdata['email'],$config['urls']['baseUrl']);
+          if ($tulos['status'] == "200") {
+          echo $templates->render('tilaa_vaihtoavain_lahetetty');
+          break;
+          }
+          echo $templates->render('virhe');
+          break;
+          } else {
+          echo $templates->render('tilaa_vaihtoavain_lahetetty');
+          break;
+          }
+          } else {
+          echo $templates->render('tilaa_vaihtoavain_lomake');
           }
           break;
 
@@ -271,117 +260,107 @@ case '/tilaa_vaihtoavain':
        $resetkey = $_GET['key'];
        require_once MODEL_DIR . 'henkilo.php';
         $rivi = tarkistaVaihtoavain($resetkey);
-        if ($rivi) {
-                        
-                        if ($rivi['aikaikkuna'] < 0) {
-                          echo $templates->render('reset_virhe');
-                          break;
-                        }
-                      } else {
-                        echo $templates->render('reset_virhe');
-                        break;
-                      }
-
-                      $formdata = cleanArrayData($_POST);
-                      if (isset($formdata['laheta'])) {
+        if ($rivi) {                  
+        if ($rivi['aikaikkuna'] < 0) {
+        echo $templates->render('reset_virhe');
+        break;
+        }
+        } else {
+        echo $templates->render('reset_virhe');
+        break;
+        }
+        $formdata = cleanArrayData($_POST);
+        if (isset($formdata['laheta'])) {
         require_once CONTROLLER_DIR . 'tili.php';
         $tulos = resetoiSalasana($formdata,$resetkey);
-       
         if ($tulos['status'] == "200") {
-          
-          echo $templates->render('reset_valmis');
-          break;
+        echo $templates->render('reset_valmis');
+        break;
         }
-    
         echo $templates->render('reset_lomake', ['error' => $tulos['error']]);
         break;
-         } else {
-          echo $templates->render('reset_lomake', ['error' => '']);
-         break;
-         }
+        } else {
+        echo $templates->render('reset_lomake', ['error' => '']);
+        break;
+        }
                                  
                       
  case (bool)preg_match('/\/admin.*/', $request):
-          if ($loggeduser["admin"]) {
-
-            echo $templates->render('admin');
-            require_once MODEL_DIR . 'varaus.php';
-            require_once MODEL_DIR . 'tiedusteluthev.php';
-            require_once MODEL_DIR . 'kaikkitilaukset.php';
+     if ($loggeduser["admin"]) {
+     echo $templates->render('admin');
+     require_once MODEL_DIR . 'varaus.php';
+     require_once MODEL_DIR . 'tiedusteluthev.php';
+     require_once MODEL_DIR . 'kaikkitilaukset.php';
          
-            $tilaukset = haeTilaukset();
-            $varatut = haeIlmoittautumiset();
-            $kiinnostukset = haeKiinnostukset();
+     $tilaukset = haeTilaukset();
+     $varatut = haeIlmoittautumiset();
+     $kiinnostukset = haeKiinnostukset();
 
-            echo $templates->render('varatut',['varatut' => $varatut]);
-            echo $templates->render('tilaukset',['tilaukset' => $tilaukset]);
-            echo $templates->render('kiinnostukset',['kiinnostukset' => $kiinnostukset]);
+     echo $templates->render('varatut',['varatut' => $varatut]);
+     echo $templates->render('tilaukset',['tilaukset' => $tilaukset]);
+     echo $templates->render('kiinnostukset',['kiinnostukset' => $kiinnostukset]);
 
-          } else {
-            echo $templates->render('admin_ei_oikeuksia');
-           }
-              break;
+     } else {
+     echo $templates->render('admin_ei_oikeuksia');
+     }
+     break;
+
               
 case '/laheta_viesti': 
-    echo $templates->render('laheta_viesti');
-    break; 
+       echo $templates->render('laheta_viesti');
+       break; 
 case '/viesti': 
-    if  (!$loggeduser) {
-    echo "Luo tili tai kirjaudu, niin voit lähettää viestin";
-    }
-    if ($loggeduser) {
-    if (isset($_POST['lahetaviesti'])) {
-    require_once MODEL_DIR . 'viesti.php';
-    require_once CONTROLLER_DIR . 'siivoa.php';
-    $siivoa = siivoaViesti($viesti);
-        if (!$siivoa) {
-          echo $templates->render('viesti_virheellinen');
-          }
-          
-          break;  
-          if ($siivoa) {
-          lisaaViesti($loggeduser['idhenkilo'],$_POST['nimi'],$_POST['email'],$_POST['viesti']);
-          echo $templates->render('viesti_lahetetty');
-          }
-        }
-          break; 
-          } else {
-          echo $templates->render('virhe');
-          }
-          break;    
-      
+         if  (!$loggeduser) {
+         echo "Luo tili tai kirjaudu sisään, niin voit lähettää viestin";
+         }
+         if ($loggeduser) {
+         $formdata = cleanArrayData($_POST);
+         if (isset($_POST['lahetaviesti'])) {
+         if (!preg_match("/^[- '\p{L}]+$/u", $formdata["viesti"])) { 
+         echo "Syötä viestisi ilman erikoismerkkejä";
+         echo $templates->render('viesti_virheellinen');
+         }
+     
+       require_once MODEL_DIR . 'viesti.php';    
+       $id = lisaaViesteja($loggeduser['idhenkilo'],($formdata['viesti']));
+       echo "Viestisi on lähetetty tunnisteella $id";
+       echo $templates->render('viesti_lahetetty');
+       }
+      }
+       break;
     
+ 
 case '/yritys': if ($request === '/yritys') {
-  echo $templates->render('yritys');
-}
+    echo $templates->render('yritys');
+    }
     break; 
 
 case '/tulossa': if ($request === '/tulossa') {
-  echo $templates->render('tulossa');
-}
+    echo $templates->render('tulossa');
+    }
     break; 
 
-    case '/hieronta': if ($request === '/hieronta') {
-      echo $templates->render('hieronta');
-    }
-        break; 
+case '/hieronta': if ($request === '/hieronta') {
+     echo $templates->render('hieronta');
+     }
+     break; 
 case '/ohjelma': if ($request === '/ohjelma') {
       echo $templates->render('ohjelma');
-    }
-        break; 
+      }
+      break; 
         
 case '/kilpailut': if ($request === '/kilpailut') {
-        echo $templates->render('kilpailut');
-}
+     echo $templates->render('kilpailut');
+     }
 
 
 else {
-echo $templates->render('notfound');
-}
-break;
+    echo $templates->render('notfound');
+    }
+    break;
 
-    default:
-      echo $templates->render('notfound');
-  }    
+default: 
+    echo $templates->render('notfound');
+    }    
 
 ?> 
