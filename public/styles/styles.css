@@ -128,6 +128,9 @@ li.dropdown {
     border-radius: 0.3rem;
     padding: 0.45rem;
     font-size: 1rem;
+    min-width: 38rem;
+    text-align: center;
+   
   }
   input[type=submit], .button {
     
@@ -139,11 +142,7 @@ li.dropdown {
     min-width: 18rem;
     margin: 1rem auto;
   }
- .info [type=viesti]
-  {
-    margin: 5,1,1,5rem;
-    min-width: 30rem;
-  }
+ 
 
   .error {
     color: rgb(116, 23, 23);

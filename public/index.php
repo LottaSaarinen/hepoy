@@ -320,20 +320,36 @@ case '/viesti':
          echo "Syötä viestisi ilman erikoismerkkejä";
          echo $templates->render('viesti_virheellinen');
          }
-     
-       require_once MODEL_DIR . 'viesti.php';    
-       $id = lisaaViesteja($loggeduser['idhenkilo'],($formdata['viesti']));
-       echo "Viestisi on lähetetty tunnisteella $id";
-       echo $templates->render('viesti_lahetetty');
-       }
-      }
-       break;
+         require_once MODEL_DIR . 'viesti.php';    
+         $id = lisaaViesteja($loggeduser['idhenkilo'],($formdata['viesti']));
+         echo "Viestisi on lähetetty tunnisteella $id";
+         echo $templates->render('viesti_lahetetty');
+         }
+         }
+         else {
+          echo $templates->render('viesti_virheellinen');
+         }
+         break;
     
  
 case '/yritys': if ($request === '/yritys') {
     echo $templates->render('yritys');
     }
     break; 
+    case '/saa': if ($request === '/saa') {
+        echo $templates->render('saa');
+        }
+        break; 
+
+case '/saa_helsinki': if ($request === '/saa_helsinki') {
+      echo $templates->render('saa_helsinki');
+      }
+      break; 
+
+case '/saatiedote': if ($request === '/saatiedote') {
+        echo $templates->render('saatiedote');
+        }
+        break; 
 
 case '/tulossa': if ($request === '/tulossa') {
     echo $templates->render('tulossa');

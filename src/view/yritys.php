@@ -15,11 +15,15 @@ Vakinainen toimipisteemme sijaitsee Helsingissä Ruskeasuolla.<br>Osoitteessa Ta
      <?php
      $googleMapsLink = "https://shorturl.at/BfHMJ";
       echo "<b><a href=\"$googleMapsLink\" target=\"_blank\">sijaintimme Google Mapsissa</a></b><br><br><br>";
-      ?>
-      
-     
+      ?>   
+  Sää Helsingissä<a href= 'https://pfa.foreca.com/api/v1/location/search/Helsinki?lang=es&token="WcLzjeS7EYC8"'>X</a>
+      <br>
 
-<b>Jos haluat lähettää viestin, voit tehdä sen <a href="laheta_viesti">TÄSTÄ</a></b>
+<b>Jos haluat lähettää viestin, voit tehdä sen kirjautuneena <a href="laheta_viesti">tästä</a></b><br>
+<a href="kirjaudu">Voit kirjautua tästä</a></b>
+<br>
+<a href="lisaa_tili">tai luoda tilin tästä</a></b>
+
    
 
 
