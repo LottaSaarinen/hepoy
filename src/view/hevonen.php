@@ -16,7 +16,7 @@
 <?php
 if (!$loggeduser) {
   echo "<br><br>";
-  echo " Luomalla tilin tai kirjautumalla pääset ilmottautumaan tapahtumiin.<a href='lisaa_tili'> Voit luoda tilin TÄSTÄ</a><a href='kirjaudu'> ja voit kirjautua TÄSTÄ</a>";
+  echo " Luomalla tilin tai kirjautumalla saat lisätietoja hevosesta.<a href='lisaa_tili'> Voit luoda tilin TÄSTÄ</a><a href='kirjaudu'> ja voit kirjautua TÄSTÄ</a>";
 
   }
 

@@ -3,22 +3,21 @@
 <?php
 
 if (!$loggeduser) {
-  echo " <hr><hr><br><h> Luomalla tilin tai kirjautumalla pääset ilmottautumaan tapahtumiin.<a href='lisaa_tili'> Voit luoda tilin TÄSTÄ</a><a href='kirjaudu'> ja voit kirjautua TÄSTÄ</a>.<br><br>";
+   echo " <hr><hr><br><h> Luomalla tilin tai kirjautumalla pääset ilmottautumaan tapahtumiin.<a href='lisaa_tili'> Voit luoda tilin TÄSTÄ</a><a href='kirjaudu'> ja voit kirjautua TÄSTÄ</a>.<br><br>";
 }
   
-?><hr><hr><br><br>
+echo"<hr><hr><br><br>";
 
-<?php
 
   $start = new DateTime($tapahtuma['tap_alkaa']);
- 
-  $end = new DateTime($tapahtuma['ilm_loppuu']);
+  $end = new DateTime($tapahtuma['tap_loppuu']);
+
 ?>
 <div>
 <div><h2><?=$tapahtuma['nimi']?></h2></div><br>
 <div><?=$tapahtuma['kuvaus']?></div>
 <div>Tapahtuma pidetään <?=$start->format('j.n.Y') ." alkaen klo " . $start->format('G:i') . " ja tapahtuma loppuu " . $end->format('j.n.Y') ?></div>
-<div>Ilmottautumien loppuu: <?=$end->format('j.n.Y G:i')?></div>
+<div>Ilmottautumien loppuu: <?=$start->format('j.n.Y G:i')?></div>
 <br><br><br></div>
 
 <?php

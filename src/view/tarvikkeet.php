@@ -9,16 +9,15 @@ $this->layout('template', ['title' => '🐎HepOy Ratsutarvikemyymälä']) ?>
 <br><br>
 
 <?php
-  //echo "<div><a href='satulat'>Satulat➡️</a></div><hr><hr><br><br>";
 
 foreach ($tarvikkeet as $tarvike) {
   
-    echo "<div><img src= $tarvike[kuva]></div>";
-    echo "<h1>$tarvike[nimi]<br>";
-    echo "Tuotteen koko $tarvike[koko]<br>";
-    echo" Tuotteen hinta $tarvike[hinta]€ ";
+    echo "<h><div><img src= $tarvike[kuva]></div>";
+    echo "<h1>$tarvike[nimi]<br></h1>";
+    echo "<h>Tuotteen koko $tarvike[koko]</h><br>";
+    echo "<h>Tuotteen hinta $tarvike[hinta]€ </h>";
     
-    echo "<div><a href='tarvike?id=" . $tarvike['idtarvike'] . "'><br>Tilaa klikkaamalla TÄSTÄ</a></div>";
+    echo "<div><a href='tarvike?id=" . $tarvike['idtarvike'] . "'><br><h>Tilaa klikkaamalla tätä</h></a></div>";
     echo "<br><hr><hr><br>";
 }
 
