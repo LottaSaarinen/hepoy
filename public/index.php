@@ -25,6 +25,7 @@ require_once '../src/init.php';
 
 
 case '/':
+
 case '/kirjaudu':
           if (isset($_POST['laheta'])) {
           require_once CONTROLLER_DIR . 'kirjaudu.php';
@@ -58,6 +59,7 @@ case '/tapahtumat':
             $tapahtumat = haeTapahtumat();
             echo $templates->render('tapahtumat',['tapahtumat' => $tapahtumat]);
             break;
+
 case '/tapahtuma':
             require_once MODEL_DIR . 'tapahtuma.php';
             require_once MODEL_DIR . 'ilmoittautuminen.php';
@@ -159,23 +161,24 @@ case '/hevoset':
           $hevoset = haeHevoset();
           echo $templates->render('hevoset',['hevoset' => $hevoset]);
           break;
-  case '/hevonen':
-            require_once MODEL_DIR . 'hevonen.php';
-            require_once MODEL_DIR . 'kiinnostus.php';
-            $hevonen = haeHevonen($_GET['id']);
-            if ($hevonen) {
-            if ($loggeduser) {
-            $kiinnostus = haekiinnostus($loggeduser['idhenkilo'],$hevonen['idhevonen']);
-            } else {
-            $kiinnostus = NULL;
-            }
-            echo $templates->render('hevonen',['hevonen' => $hevonen,
-           'kiinnostus' => $kiinnostus,
-           'loggeduser' => $loggeduser]);
-            } else {
-            echo $templates->render('tapahtumanotfound');
-            }
-            break;
+
+case '/hevonen':
+          require_once MODEL_DIR . 'hevonen.php';
+          require_once MODEL_DIR . 'kiinnostus.php';
+          $hevonen = haeHevonen($_GET['id']);
+          if ($hevonen) {
+          if ($loggeduser) {
+          $kiinnostus = haekiinnostus($loggeduser['idhenkilo'],$hevonen['idhevonen']);
+          } else {
+          $kiinnostus = NULL;
+          }
+          echo $templates->render('hevonen',['hevonen' => $hevonen,
+          'kiinnostus' => $kiinnostus,
+          'loggeduser' => $loggeduser]);
+          } else {
+          echo $templates->render('tapahtumanotfound');
+          }
+          break;
   
 case '/kerrokiinnostuksesi':
          if ($_GET['id']) {
@@ -309,6 +312,7 @@ case '/tilaa_vaihtoavain':
 case '/laheta_viesti': 
        echo $templates->render('laheta_viesti');
        break; 
+       
 case '/viesti': 
          if  (!$loggeduser) {
          echo "Luo tili tai kirjaudu sisään, niin voit lähettää viestin";
@@ -336,20 +340,6 @@ case '/yritys': if ($request === '/yritys') {
     echo $templates->render('yritys');
     }
     break; 
-    case '/saa': if ($request === '/saa') {
-        echo $templates->render('saa');
-        }
-        break; 
-
-case '/saa_helsinki': if ($request === '/saa_helsinki') {
-      echo $templates->render('saa_helsinki');
-      }
-      break; 
-
-case '/saatiedote': if ($request === '/saatiedote') {
-        echo $templates->render('saatiedote');
-        }
-        break; 
 
 case '/tulossa': if ($request === '/tulossa') {
     echo $templates->render('tulossa');
@@ -360,6 +350,7 @@ case '/hieronta': if ($request === '/hieronta') {
      echo $templates->render('hieronta');
      }
      break; 
+
 case '/ohjelma': if ($request === '/ohjelma') {
       echo $templates->render('ohjelma');
       }

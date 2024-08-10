@@ -1,14 +1,9 @@
 <?php $this->layout('template', ['title' => $tapahtuma['nimi']]) ?>
 
-
-
-<br>
-<h> Yritys 🐎HepOy järjestää ratsastuskilpailuita, hieroo hevosia eri maakunnissa sekä jäljestää hevosaiheisia tapahtumia</h>
-<br><br>'
 <?php
 
 if (!$loggeduser) {
-  echo " <hr><hr><br><h2> Luomalla tilin pääset ilmottautumaan tapahtumiin.<a href='lisaa_tili'> Voit luoda tilin TÄSTÄ</a>.<br><br>";
+  echo " <hr><hr><br><h> Luomalla tilin tai kirjautumalla pääset ilmottautumaan tapahtumiin.<a href='lisaa_tili'> Voit luoda tilin TÄSTÄ</a><a href='kirjaudu'> ja voit kirjautua TÄSTÄ</a>.<br><br>";
 }
   
 ?><hr><hr><br><br>
